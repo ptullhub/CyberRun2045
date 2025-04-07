@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Obstacle : MonoBehaviour
+public class Obstacle : MovingObjectParent
 {
     [SerializeField] private float obstacleSpeed;
     [SerializeField] private float spawnHeight;
     // Start is called before the first frame update
-    private void Start()
+    private new void Start()
     {
+        base.Start();
         Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
         rb.velocity = Vector2.left * obstacleSpeed;
         transform.position = new Vector2(9.5f, -3.5f);
@@ -22,5 +23,10 @@ public class Obstacle : MonoBehaviour
         {
             idamageable.DamageIncoming();
         }
+    }
+
+    private new void OnDestroy()
+    {
+        base.OnDestroy();
     }
 }

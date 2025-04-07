@@ -11,9 +11,11 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField] private LayerMask ground;
     [SerializeField] private Transform feetPosition;
 
+    // This could probably be an enumeration
     private bool isOnGround = false;
     private bool isJumping = false;
     private bool jumpHeld = false;
+    private bool isDead = false;
 
     private float jumpTimer = 0f;
 
@@ -35,16 +37,19 @@ public class PlayerController : MonoBehaviour, IDamageable
             }
         }
 
-        // Poll the animator every frame so state lockouts are unlikely
-        animator.SetBool("isJumping", isJumping);
-        animator.SetBool("isFalling", rigidBody.velocity.y < 0 && !isOnGround);
-        animator.SetBool("isGrounded", isOnGround);
+        if (!isDead)
+        {
+            // Poll the animator every frame so state lockouts are unlikely
+            animator.SetBool("isJumping", isJumping);
+            animator.SetBool("isFalling", rigidBody.velocity.y < 0 && !isOnGround);
+            animator.SetBool("isGrounded", isOnGround);
+        }
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
         // Jump initiated
-        if (context.started && isOnGround)
+        if (context.started && isOnGround && !isDead)
         {
             
             isJumping = true;
@@ -54,20 +59,25 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
 
         // Jump button released
-        if (context.canceled)
+        if (context.canceled && !isDead)
         {
             jumpHeld = false;
             isJumping = false;
         }
     }
 
-    public void DamageIncoming()
-    {
-        // Implement damage handling 
-    }
-
     public void OnShoot(InputAction.CallbackContext context)
     {
         // Implement shooting 
+    }
+
+    public void DamageIncoming()
+    {
+        isDead = true;
+
+        animator.SetBool("gameOver", true);
+
+        GameManager.GameInstance.GameOver();
+
     }
 }

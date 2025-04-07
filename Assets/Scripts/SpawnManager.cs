@@ -17,19 +17,24 @@ public class SpawnManager : MonoBehaviour
         }
 
         SpawnInstance = this;
+
+        StartSpawning();
     }
 
     private void Start()
     {
-        InvokeRepeating(nameof(Spawn), obstacleSpawnTime, obstacleSpawnTime);
+        GameManager.GameInstance.onGameOver.AddListener(StopSpawning);
     }
-
     private void Spawn()
     {
         GameObject obstacleToSpawn = obstaclePrefabs[Random.Range(0, obstaclePrefabs.Length)];
         Instantiate(obstacleToSpawn, transform.position, Quaternion.identity);
     }
 
+    public void StartSpawning()
+    {
+        InvokeRepeating(nameof(Spawn), obstacleSpawnTime, obstacleSpawnTime);
+    }
     public void StopSpawning()
     {
         CancelInvoke(nameof(Spawn));
