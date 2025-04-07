@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Parent class for all obstacles so they stop moving on a game over
 public class MovingObjectParent : MonoBehaviour
 {
-    // Start is called before the first frame update
+    // Hardcoded destroy position
+    private float destroyXPosition = -10f;
     public void Start()
     {
         GameManager.GameInstance.onGameOver.AddListener(StopMoving);
@@ -20,4 +22,14 @@ public class MovingObjectParent : MonoBehaviour
     {
         GameManager.GameInstance.onGameOver.RemoveListener(StopMoving);
     }
+    
+    // Probably could employ object pooling here
+    void Update()
+    {
+        if (transform.position.x < destroyXPosition)
+        {
+            Destroy(gameObject);
+        }
+    }
+
 }

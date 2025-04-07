@@ -5,13 +5,11 @@ using UnityEngine;
 public class Obstacle : MovingObjectParent
 {
     [SerializeField] private float obstacleSpeed;
-    [SerializeField] private float spawnHeight;
     // Start is called before the first frame update
     private new void Start()
     {
         base.Start();
-        Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
-        rb.velocity = Vector2.left * obstacleSpeed;
+        Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();  
         transform.position = new Vector2(9.5f, -3.5f);
     }
 

@@ -71,6 +71,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         // Implement shooting 
     }
 
+    // Game over the player if they collide with a damage trigger from the interface message
     public void DamageIncoming()
     {
         isDead = true;

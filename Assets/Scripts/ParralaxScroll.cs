@@ -14,14 +14,22 @@ public class ParallaxLayer : MonoBehaviour
     }
     void Update()
     {
-        if (!isScrolling) return;
+        if (isScrolling)
+        {
+            offset += Time.deltaTime * scrollSpeed;
+            layerRenderer.material.mainTextureOffset = new Vector2(offset, 0f);
+        }
 
-        offset += Time.deltaTime * scrollSpeed;
-        layerRenderer.material.mainTextureOffset = new Vector2(offset, 0f);
+        
     }
 
     public void StopScrolling()
     {
         isScrolling = false;
+    }
+
+    public void ChangeScrollSpeed(float newSpeed)
+    {
+        scrollSpeed = newSpeed;
     }
 }

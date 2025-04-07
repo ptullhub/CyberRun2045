@@ -9,9 +9,9 @@ public class GameManager : MonoBehaviour
 
     public float score = 0f;
 
-    public bool gameIsLive = false;
+    public bool gameIsLive;
 
-    
+    public SaveData saveData;
     private void Awake()
     {
         // Singleton setup
@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        saveData = new SaveData();
         gameIsLive = true;
     }
 
@@ -40,10 +41,16 @@ public class GameManager : MonoBehaviour
     }
     public void GameOver()
     {
-        onGameOver.Invoke();
+        // Check for new high score
+        if (saveData.highScore < score)
+        {
+            saveData.highScore = score;
+        }
 
-        score = 0f;
         gameIsLive = false;
+
+        // Invoke all events that care about a game over
+        onGameOver.Invoke();
 
     }
     public int GetCurrentScore()

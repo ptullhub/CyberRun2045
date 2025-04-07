@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI scoreText;
-
+    [SerializeField] TextMeshProUGUI highScoreText;
     private GameManager gameManager;
 
     [SerializeField] private GameObject gameOverScreen;
@@ -16,6 +16,7 @@ public class UIManager : MonoBehaviour
         gameManager = GameManager.GameInstance;
         gameManager.onGameOver.AddListener(ShowGameOverScreen);
     }
+    // Update the score text periodically
     private void OnGUI()
     {
         scoreText.text = "Score: " + gameManager.GetCurrentScore().ToString();
@@ -24,6 +25,8 @@ public class UIManager : MonoBehaviour
     private void ShowGameOverScreen()
     {
         gameOverScreen.SetActive(true);
+        
+        highScoreText.text = "High Score: " + gameManager.saveData.ToString();
     }
 
     // Methods called from buttons
