@@ -27,7 +27,16 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        saveData = new SaveData();
+        string loadedData = SaveSystem.Load("save");
+        if (loadedData != null)
+        {
+            saveData = JsonUtility.FromJson<SaveData>(loadedData);
+        }
+        else
+        {
+            saveData = new SaveData();
+        }
+
         gameIsLive = true;
     }
 
@@ -44,7 +53,10 @@ public class GameManager : MonoBehaviour
         // Check for new high score
         if (saveData.highScore < score)
         {
-            saveData.highScore = score;
+            saveData.highScore = Mathf.RoundToInt(score);
+
+            string saveString = JsonUtility.ToJson(saveData);
+            SaveSystem.Save("save", saveString);
         }
 
         gameIsLive = false;
@@ -58,5 +70,8 @@ public class GameManager : MonoBehaviour
         return Mathf.RoundToInt(score);
     }
 
-    
+    public void AddScore(float scoreAdd)
+    {
+        score += scoreAdd;
+    }
 }

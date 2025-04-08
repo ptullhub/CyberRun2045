@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    public static SpawnManager SpawnInstance { get; private set; }
 
     [SerializeField] private GameObject[] obstaclePrefabs;
     [SerializeField] private Transform obstacleParent; // For organization
@@ -15,21 +14,6 @@ public class SpawnManager : MonoBehaviour
     private float baseObstacleSpeed;
     private float lastAppliedSpawnTime; 
 
-
-    private void Awake()
-    {
-        // Singleton setup
-        if (SpawnInstance != null && SpawnInstance != this)
-        {
-            Destroy(gameObject); // Avoid duplicates
-            return;
-        }
-
-        SpawnInstance = this;
-
-        StartSpawning();
-    }
-
     private void Start()
     {
         GameManager.GameInstance.onGameOver.AddListener(StopSpawning);
@@ -39,6 +23,8 @@ public class SpawnManager : MonoBehaviour
         baseSpawnTime = obstacleSpawnTime;
         baseObstacleSpeed = obstacleSpeed;
         lastAppliedSpawnTime = obstacleSpawnTime;
+
+        StartSpawning();
 
     }
 

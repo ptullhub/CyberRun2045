@@ -5,11 +5,19 @@ public class PlayerController : MonoBehaviour, IDamageable
 {
     [SerializeField] private Rigidbody2D rigidBody;
     [SerializeField] private Animator animator;
+
+    [SerializeField] private AudioSource playerAudio;
+
     [SerializeField] private float jumpPower = 10f;
     [SerializeField] private float jumpTime = 0.3f;
+    [SerializeField] private float bulletSpeed = 10f;
     [SerializeField] private float groundDistance = 0.25f;
     [SerializeField] private LayerMask ground;
     [SerializeField] private Transform feetPosition;
+
+    [SerializeField] private Transform shootPoint;
+    [SerializeField] private ObjectPool projectilePool;
+
 
     // This could probably be an enumeration
     private bool isOnGround = false;
@@ -68,8 +76,19 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     public void OnShoot(InputAction.CallbackContext context)
     {
-        // Implement shooting 
+        if (context.performed && !isDead)
+        {
+            playerAudio.Play();
+            GameObject projectile = projectilePool.GetFromPool();
+            projectile.transform.position = shootPoint.position;
+            projectile.transform.rotation = Quaternion.identity;
+            projectile.GetComponent<Rigidbody2D>().velocity = Vector2.right * bulletSpeed;
+
+            // Let the projectile know where to return
+            projectile.GetComponent<Projectile>().SetPool(projectilePool);
+        }
     }
+
 
     // Game over the player if they collide with a damage trigger from the interface message
     public void DamageIncoming()

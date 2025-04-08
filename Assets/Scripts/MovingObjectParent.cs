@@ -7,6 +7,8 @@ public class MovingObjectParent : MonoBehaviour
 {
     // Hardcoded destroy position
     private float destroyXPosition = -10f;
+
+    public Vector2 spawnLocation;
     public void Start()
     {
         GameManager.GameInstance.onGameOver.AddListener(StopMoving);
@@ -23,7 +25,7 @@ public class MovingObjectParent : MonoBehaviour
         GameManager.GameInstance.onGameOver.RemoveListener(StopMoving);
     }
     
-    // Probably could employ object pooling here
+    // Destroy object if it gets to -10 on the x
     void Update()
     {
         if (transform.position.x < destroyXPosition)

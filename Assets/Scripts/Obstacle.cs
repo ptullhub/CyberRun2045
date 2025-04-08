@@ -9,8 +9,8 @@ public class Obstacle : MovingObjectParent
     private new void Start()
     {
         base.Start();
-        Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();  
-        transform.position = new Vector2(9.5f, -3.5f);
+        Rigidbody2D rb = gameObject.GetComponent<Rigidbody2D>();
+        transform.position = spawnLocation;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

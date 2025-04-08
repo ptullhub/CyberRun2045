@@ -26,7 +26,7 @@ public class UIManager : MonoBehaviour
     {
         gameOverScreen.SetActive(true);
         
-        highScoreText.text = "High Score: " + gameManager.saveData.ToString();
+        highScoreText.text = "High Score: " + gameManager.saveData.highScore.ToString();
     }
 
     // Methods called from buttons
