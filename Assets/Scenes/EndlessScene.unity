@@ -1053,12 +1053,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2449484388955776056, guid: 2694cce0e2951084d859538b7b0d082b, type: 3}
       propertyPath: obstaclePrefabs.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2449484388955776056, guid: 2694cce0e2951084d859538b7b0d082b, type: 3}
       propertyPath: obstaclePrefabs.Array.data[1]
       value: 
       objectReference: {fileID: 2543872711570470328, guid: 7ae3026a03602ca45abeef1c7f49e46c, type: 3}
+    - target: {fileID: 2449484388955776056, guid: 2694cce0e2951084d859538b7b0d082b, type: 3}
+      propertyPath: obstaclePrefabs.Array.data[2]
+      value: 
+      objectReference: {fileID: 2543872711570470328, guid: a98d37cd64b02fe4cb0a294ce99d88b0, type: 3}
     - target: {fileID: 5271557177996604674, guid: 2694cce0e2951084d859538b7b0d082b, type: 3}
       propertyPath: m_Name
       value: SpawnManager
